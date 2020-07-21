@@ -7,8 +7,8 @@ br = mechanize.Browser()
 br.set_handle_robots(False)
 br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 
-
-kind = "https://punchng.com/search/buhari"
+kind="https://punchng.com/topics/news/"
+# kind = "https://punchng.com/search/buhari"
 br.open(kind)
 # br.open("https://punchng.com/topics/news/")
 # br.open("https://punchng.com/topics/business/")
@@ -63,22 +63,20 @@ if 'search' in kind:
     for data in dates:
         date.append(data(text=True))
         m=(str(data))
-        print(m)
+        # print(m)
         perfect_date.append(m[23:38])
-    print(perfect_date)
 
-    for sfoto in imagelinks:
-        smallimage.append(sfoto['data-src-small'])
+
 
     for pfoto in imagelinks:
         largeimage.append(pfoto['data-src'])
+    
 
     for insecure in list_items:
         links = insecure.find_all('a', href=True)
         for hyper in links:
             link.append(hyper['href'])
-
-
+    
 else:
     print(False)
     # saves page source
@@ -126,8 +124,7 @@ else:
         links = insecure.find_all('a', href=True)
         for hyper in links:
             link.append(hyper['href'])
+    print(imagelinks)
 
-    print(date)
-    print(len(date))
     
 
