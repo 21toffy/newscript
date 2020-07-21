@@ -11,8 +11,10 @@ kind="https://punchng.com/topics/news/"
 # kind = "https://punchng.com/search/buhari"
 br.open(kind)
 # br.open("https://punchng.com/topics/news/")
+# https://punchng.com/topics/entertainment/
 # br.open("https://punchng.com/topics/business/")
 # br.open("https://punchng.com/topics/sports/")
+# https://punchng.com/topics/technology/
 
 # br.open("https://punchng.com/topics/politics/page/2")
 # br.open("https://punchng.com/topics/news/page/2")
