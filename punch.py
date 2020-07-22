@@ -24,109 +24,75 @@ br.open(kind)
 # br.open("https://punchng.com/search/coronavirus")
 
 
-if 'search' in kind:
-    print(True)
-    
-    # saves page source
-    orders_html = br.response().read()
-
-    #initializing bs4 for scraping
-    soup = BeautifulSoup(orders_html,'html.parser')
-    # saves page source
-    orders_html = br.response().read()
-
-    #initializing bs4 for scraping
-    soup = BeautifulSoup(orders_html,'html.parser')
-
-    list_items = soup.find_all("div", {"class": "items"})
-    titles=soup.find_all("h2", {"class": "seg-title"})
-    summaries=soup.find_all("div", {"class": "seg-summary"})
-    dates=soup.find_all("div", {"class": "seg-time"})
-    imagelinks = soup.find_all('figure', {'class': 'seg-image'})
-
-
-
-    link=[]
-    title=[]
-    summary=[]
-    date=[]
-    smallimage=[]
-    largeimage=[]
-
-    for tit in titles:
-        title.append(tit.find(text=True))
-
-    for sum in summaries:
-        random = sum.find_all('p')
-        for realshit in random:
-            summary.append(realshit.find(text=True))
-
-    perfect_date=[]
-    for data in dates:
-        date.append(data(text=True))
-        m=(str(data))
-        # print(m)
-        perfect_date.append(m[23:38])
-
-
-
-    for pfoto in imagelinks:
-        largeimage.append(pfoto['data-src'])
-    
-
-    for insecure in list_items:
-        links = insecure.find_all('a', href=True)
-        for hyper in links:
-            link.append(hyper['href'])
-    
-else:
-    print(False)
-    # saves page source
-    orders_html = br.response().read()
-
-    #initializing bs4 for scraping
-    soup = BeautifulSoup(orders_html,'html.parser')
-
-
-    list_items = soup.find_all("div", {"class": "items"})
-    titles=soup.find_all("h2", {"class": "seg-title"})
-    summaries=soup.find_all("div", {"class": "seg-summary"})
-    dates=soup.find_all("div", {"class": "seg-time"})
-    imagelinks = soup.find_all('figure', {'class': 'seg-image'})
-
-
-    link=[]
-    title=[]
-    summary=[]
-    date=[]
-    smallimage=[]
-    largeimage=[]
-
-    for tit in titles:
-        title.append(tit.find(text=True))
-
-    for sum in summaries:
-        random = sum.find_all('p')
-        for realshit in random:
-            summary.append(realshit.find(text=True))
-
-
-    for data in dates:
-        random = data.find_all('span')
-        for realshit in random:
-            date.append(realshit.find(text=True))
-
-    for sfoto in imagelinks:
-        smallimage.append(sfoto['data-src-small'])
-
-    for pfoto in imagelinks:
-        largeimage.append(pfoto['data-src'])
-
-    for insecure in list_items:
-        links = insecure.find_all('a', href=True)
-        for hyper in links:
-            link.append(hyper['href'])
-    print(imagelinks)
 
     
+
+
+# saves page source
+orders_html = br.response().read()
+
+#initializing bs4 for scraping
+soup = BeautifulSoup(orders_html,'html.parser')
+
+#got the div wrapping each listed news element
+list_items = soup.find_all("div", {"class": "items"})
+
+#got the h2 tag wrapping each listed title 
+titles=soup.find_all("h2", {"class": "seg-title"})
+
+summaries=soup.find_all("div", {"class": "seg-summary"})
+dates=soup.find_all("div", {"class": "seg-time"})
+imagelinks = soup.find_all('figure', {'class': 'seg-image'})
+
+
+link=[]
+title=[]
+summary=[]
+date=[]
+smallimage=[]
+largeimage=[]
+#keys for the to create a dictionary
+keys=['id','summary','date','photo','title', 'link']
+
+_id=[]
+
+#looping to append titles to the list
+for tit in titles:
+    title.append(tit.find(text=True))
+
+# looping to make the index of each element represented by the title be the id of that news element
+for i in title:
+    _id.append(title.index(i))
+
+
+# appending summary to list
+for sum in summaries:
+    random = sum.find_all('p')
+    for realshit in random:
+        summary.append(realshit.find(text=True))
+
+
+for data in dates:
+    random = data.find_all('span')
+    for realshit in random:
+        date.append(realshit.find(text=True))
+
+for sfoto in imagelinks:
+    smallimage.append(sfoto['data-src-small'])
+
+for pfoto in imagelinks:
+    largeimage.append(pfoto['data-src'])
+
+for insecure in list_items:
+    links = insecure.find_all('a', href=True)
+    for hyper in links:
+        link.append(hyper['href'])
+
+
+# this converts all the lists to a dictionary
+data=[]
+for i in range(len(keys)):
+        data.append({'id':_id[i],'summary':summary[i],'date':date[i],'photo':largeimage[i],'title':title[i],'link':link[i]})
+print(data)
+
 

@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
 import mechanize
-
+import datetime
 
 #to initialize the browser
+start = datetime.datetime.now()
 br = mechanize.Browser()
 br.set_handle_robots(False)
 br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
@@ -41,6 +42,7 @@ date=[]
 vanguardphoto=[]
 title=[]
 link=[]
+keys=['id','summary','date','photo','title', 'link']
 
 for indtitle in titles:
     varsingtitle=indtitle.find_all('a', href=True)
@@ -55,7 +57,7 @@ for indtitle in titles:
 
 for identification in list_items:
     _id.append(identification['id'])
-print(_id) 
+# print(_id) 
 
 
 for i in imagelinks:
@@ -79,5 +81,26 @@ for i in best:
         del i
     else:
         summary.append(i)
+
+    
+
+data=[dict(zip(keys, i)) for i in zip(_id, summary, date, vanguardphoto, title, link)]
+print(data)
+
+
+
+#this also works
+# data=[]
+# for i in range(len(keys)):
+#         data.append({'id':_id[i],'summary':summary[i],'date':date[i],'photo':vanguardphoto[i],'title':title[i],'link':link[i]})
+
+
+
+
+
+finish = datetime.datetime.now()
+print (finish-start)
+
+
 
 
